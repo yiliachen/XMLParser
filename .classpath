@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Users/ming.c.chen/Downloads/fastjson-1.2.41.jar"/>
+	<classpathentry kind="lib" path="httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.31.jar"/>
+	<classpathentry kind="lib" path="druid-1.1.6.jar"/>
+	<classpathentry kind="lib" path="ascii-utf-themes-0.0.1.jar"/>
+	<classpathentry kind="lib" path="asciitable-0.3.2-sources.jar"/>
+	<classpathentry kind="lib" path="asciitable-0.3.2.jar" sourcepath="/Users/ming.c.chen/.m2/repository/de/vandermeer/asciitable/0.3.2/asciitable-0.3.2-sources.jar"/>
+	<classpathentry kind="lib" path="skb-interfaces-0.0.1.jar"/>
+	<classpathentry kind="lib" path="commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="ST-4.0.8.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
