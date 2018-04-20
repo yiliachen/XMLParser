@@ -67,6 +67,9 @@ public class postToApex {
 				int counter = 0;
 				ArrayList<SguidIssueRecord> issues = new ArrayList<SguidIssueRecord>();
 				while((lLine = lbr.readLine()) != null ){
+					if(!lLine.contains("\\|")){
+						continue;
+					}
 					String [] lfields = lLine.split("\\|");
 					SguidIssueRecord lsir = new SguidIssueRecord();
 					//System.out.println(lLine);
