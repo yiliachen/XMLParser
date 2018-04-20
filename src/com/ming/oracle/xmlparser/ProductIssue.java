@@ -3,6 +3,7 @@ package com.ming.oracle.xmlparser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mh.jdbc.util.HTMLTableBuilder;
 import com.mh.jdbc.util.RowMapper;
 
 import de.vandermeer.asciitable.AsciiTable;
@@ -10,21 +11,41 @@ import de.vandermeer.asciitable.AsciiTable;
 public class ProductIssue implements RowMapper<ProductIssue> {
 	private String branch;
 //	private String mail;
-	private String product;
+//	private String product;
 	private String NullSGUID;
 	private String Duplicated;
 	private String BULKSEEDMissing;
 //	private String ERROR_DUPSGUID;
 	private String ERROR_SGUIDDIFF;
-	public AsciiTable getHeader(AsciiTable tab ){
-		tab.addRow("Branch","product","Duplicated","Null SGUID","Bulk Sql Missing", "sguid diff for same rowkey accross branches");
+	private String IndexMissing;
+	
+	public static AsciiTable getHeader(AsciiTable tab ){
+		tab.addRow("Branch","product","Duplicated","Null SGUID","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
 		return tab;
 	}
 	
+	public static HTMLTableBuilder setHtmlHeader(HTMLTableBuilder htb){
+		htb.addTableHeader("Branch","Duplicated","Null SGUID","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
+		return htb;
+	}
+	
+	public HTMLTableBuilder setHtmlRow(HTMLTableBuilder htb){
+		htb.addRowValues(this.branch, 
+				this.Duplicated, 
+				this.NullSGUID, 
+				this.BULKSEEDMissing, 
+				this.ERROR_SGUIDDIFF, 
+				this.IndexMissing);
+		return htb;
+	}
+	
 	public AsciiTable toRow(AsciiTable tab){
-		tab.addRow(this.branch, this.product, this.Duplicated, this.NullSGUID, this.BULKSEEDMissing, 
-//				this.ERROR_DUPSGUID, 
-				this.ERROR_SGUIDDIFF);
+		tab.addRow(this.branch, 
+				this.Duplicated, 
+				this.NullSGUID, 
+				this.BULKSEEDMissing, 
+				this.ERROR_SGUIDDIFF, 
+				this.IndexMissing);
 		return tab;
 	}
 	
@@ -46,13 +67,13 @@ public class ProductIssue implements RowMapper<ProductIssue> {
 //		this.mail = mail;
 //	}
 
-	public String getProduct() {
-		return product;
-	}
-
-	public void setProduct(String product) {
-		this.product = product;
-	}
+//	public String getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(String product) {
+//		this.product = product;
+//	}
 
 	public String getNullSGUID() {
 		return NullSGUID;
@@ -94,20 +115,26 @@ public class ProductIssue implements RowMapper<ProductIssue> {
 		ERROR_SGUIDDIFF = eRROR_SGUIDDIFF;
 	}
 
-	
+	public String getIndexMissing() {
+		return IndexMissing;
+	}
+
+	public void setIndexMissing(String indexMissing) {
+		IndexMissing = indexMissing;
+	}
+
 	@Override
 	public ProductIssue mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
 		ProductIssue pi = new ProductIssue();
 		pi.setBranch(rs.getString(1));
 //		pi.setMail(rs.getString(2));
-		pi.setProduct(rs.getString(2));
-		pi.setDuplicated(rs.getString(3));
-		pi.setNullSGUID(rs.getString(4));
-		pi.setBULKSEEDMissing(rs.getString(5));
+//		pi.setProduct(rs.getString(2));
+		pi.setDuplicated(rs.getString(2));
+		pi.setNullSGUID(rs.getString(3));
+		pi.setBULKSEEDMissing(rs.getString(4));
 //		pi.setERROR_DUPSGUID(rs.getString(7));
-		pi.setERROR_SGUIDDIFF(rs.getString(6));
+		pi.setERROR_SGUIDDIFF(rs.getString(5));
+		pi.setIndexMissing(rs.getString(6));
 		return pi;
 	}
-
 }
