@@ -16,15 +16,14 @@ import javax.sql.DataSource;
 import com.alibaba.druid.pool.DruidDataSource;
 
 public class DBUtil {
-
-	static {
-		try {
-			Configure.initConfig();
+    public static void initConfig(String path){
+    	try {
+			Configure.initConfig(path);
 			Class.forName(Configure.getDriverClassName());
 		} catch (Exception e) {
 			// do nothing
 		}
-	}
+    }
 	
 	public static DataSource getDataSource(){
 		DruidDataSource ds = new DruidDataSource();

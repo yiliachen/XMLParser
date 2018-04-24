@@ -13,10 +13,10 @@ public class Configure {
 	private static String username;
 	private static String password;
 
-	public static void initConfig() throws Exception {
-//		File file = new File("/net/slc09pot.us.oracle.com/scratch/SeedProcess/utils/database.properties");
-		File file = new File("./src/database.properties");
-		System.out.println("Read from /net/slc09pot.us.oracle.com/scratch/SeedProcess/utils/database.properties");
+	public static void initConfig(String configPath) throws Exception {
+		File file = new File(configPath);
+//		File file = new File("./src/database.properties");
+		System.out.println("Read from "+configPath);
 		InputStream fis = new FileInputStream(file);
 		Properties props = new Properties();
 		props.load(fis);

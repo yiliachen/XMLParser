@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,10 +24,6 @@ import com.alibaba.fastjson.JSON;
 import com.mh.jdbc.api.JdbcTemplate;
 import com.mh.jdbc.util.DBUtil;
 import com.mh.jdbc.util.HTMLTableBuilder;
-
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciithemes.a7.A7_Grids;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 
 public class postToApex {
 
@@ -48,11 +43,13 @@ public class postToApex {
 	}
 
 	public static void main(String[] args) {
+		
 		try{
-			if(args.length != 3){
-				System.out.println("Usage:postToApex logfile url branch");
+			if(args.length != 4){
+				System.out.println("Usage:postToApex logfile url branch config");
 				System.exit(-1);
 			}
+			DBUtil.initConfig(args[3]);
 			postToApex self = new postToApex();
 			String [] branchAndLabel = args[2].split("\\|");;
 			self.setBranch(branchAndLabel[0]);
