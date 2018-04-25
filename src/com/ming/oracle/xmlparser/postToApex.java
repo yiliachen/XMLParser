@@ -237,11 +237,11 @@ public class postToApex {
 				pi.setHtmlRow(htb);
 		}
 		
-		String header = "Sguid issue found, Here are the details:\n";
+//		String header = "Sguid issue found, Here are the details:\n";
 		// set the html message
 		//iterate by product
 		String footer = "For more information, please visit https://apex.oraclecorp.com/pls/apex/f?p=22627:2:12229513583982::NO:RP::\n Or send mail to ming.c.chen@oracle.com Thanks!";
-		email.setHtmlMsg(header+htb.build()+footer);
+		email.setHtmlMsg(htb.build()+footer);
 
 		email.send();
 	}
