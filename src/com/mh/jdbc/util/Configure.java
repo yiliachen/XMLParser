@@ -16,7 +16,7 @@ public class Configure {
 	public static void initConfig(String configPath) throws Exception {
 		File file = new File(configPath);
 //		File file = new File("./src/database.properties");
-		System.out.println("Read from "+configPath);
+//		System.out.println("Read from "+configPath);
 		InputStream fis = new FileInputStream(file);
 		Properties props = new Properties();
 		props.load(fis);
@@ -25,7 +25,7 @@ public class Configure {
 		url = props.getProperty("connection.url");
 		username = props.getProperty("connection.username");
 		password = props.getProperty("connection.password");
-		System.out.print(dbType+driverClassName+url+username+password);
+//		System.out.print(dbType+driverClassName+url+username+password);
 	}
 
 	public static String getDbType() {
