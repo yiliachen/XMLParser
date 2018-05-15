@@ -15,10 +15,14 @@ public class LabelCompare {
 		String lsrcfileName = args[0];
 		String ltrgfileName = args[1];
 
+		String [] lfields = args[2].split("\\|");
 		SGUIDValidator srcsvad = new SGUIDValidator(lsrcfileName);
-		srcsvad.setBranchName(args[2]);
+		srcsvad.setBranchName(lfields[0]);
+		srcsvad.setLabel(lfields[1]);
+		lfields = args[3].split("\\|");
 		SGUIDValidator trgsvad = new SGUIDValidator(ltrgfileName);
-		trgsvad.setBranchName(args[3]);
+		trgsvad.setBranchName(lfields[0]);
+		trgsvad.setLabel(lfields[1]);
 		srcsvad.compare(trgsvad);
 	}
 }

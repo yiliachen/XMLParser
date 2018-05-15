@@ -20,19 +20,19 @@ public class ProductIssue implements RowMapper<ProductIssue> {
 	private String IndexMissing;
 	
 	public static AsciiTable getHeader(AsciiTable tab ){
-		tab.addRow("Branch","product","Duplicated","Null SGUID","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
+		tab.addRow("Branch","product","Null SGUID","Duplicated","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
 		return tab;
 	}
 	
 	public static HTMLTableBuilder setHtmlHeader(HTMLTableBuilder htb){
-		htb.addTableHeader("Branch","Duplicated","Null SGUID","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
+		htb.addTableHeader("Branch","Null SGUID","Duplicated","Bulk Sql Missing", "sguid diff for same rowkey accross branches", "tableFile does not have sguid indexed");
 		return htb;
 	}
 	
 	public HTMLTableBuilder setHtmlRow(HTMLTableBuilder htb){
 		htb.addRowValues(this.branch, 
-				this.Duplicated, 
 				this.NullSGUID, 
+				this.Duplicated, 
 				this.BULKSEEDMissing, 
 				this.ERROR_SGUIDDIFF, 
 				this.IndexMissing);
@@ -41,8 +41,8 @@ public class ProductIssue implements RowMapper<ProductIssue> {
 	
 	public AsciiTable toRow(AsciiTable tab){
 		tab.addRow(this.branch, 
+				this.NullSGUID,
 				this.Duplicated, 
-				this.NullSGUID, 
 				this.BULKSEEDMissing, 
 				this.ERROR_SGUIDDIFF, 
 				this.IndexMissing);
@@ -129,8 +129,8 @@ public class ProductIssue implements RowMapper<ProductIssue> {
 		pi.setBranch(rs.getString(1));
 //		pi.setMail(rs.getString(2));
 //		pi.setProduct(rs.getString(2));
-		pi.setDuplicated(rs.getString(2));
-		pi.setNullSGUID(rs.getString(3));
+		pi.setNullSGUID(rs.getString(2));
+		pi.setDuplicated(rs.getString(3));
 		pi.setBULKSEEDMissing(rs.getString(4));
 //		pi.setERROR_DUPSGUID(rs.getString(7));
 		pi.setERROR_SGUIDDIFF(rs.getString(5));

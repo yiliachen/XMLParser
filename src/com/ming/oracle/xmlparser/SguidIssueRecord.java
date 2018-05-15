@@ -6,7 +6,7 @@ public class SguidIssueRecord {
 	private String gSTATUS;
 	private String gCOMMENTS;
 	private String gBRANCH;
-	
+	private String gTAR_BRANCH;
 	
 	public String getgBRANCH() {
 		return gBRANCH;
@@ -37,6 +37,12 @@ public class SguidIssueRecord {
 	}
 	public void setgCOMMENTS(String gCOMMENTS) {
 		this.gCOMMENTS = gCOMMENTS;
+	}
+	public String getgTAR_BRANCH() {
+		return gTAR_BRANCH;
+	}
+	public void setgTAR_BRANCH(String gTAR_BRANCH) {
+		this.gTAR_BRANCH = gTAR_BRANCH;
 	}
 
 }

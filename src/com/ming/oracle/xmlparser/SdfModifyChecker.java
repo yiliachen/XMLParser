@@ -147,7 +147,7 @@ public class SdfModifyChecker{
         			}
         		}
         		if(!addRowkeyList.isEmpty()) {
-        			System.out.println("Following rowkey created in "+sdf);
+//        			System.out.println("Following rowkey added to "+sdf);
         			for(String s:addRowkeyList) {
         				SdfModRecord rec = new SdfModRecord();
 						rec.setgISSUE_TYPE(SdfModRecord.ADD_ROW);
@@ -156,13 +156,13 @@ public class SdfModifyChecker{
 						rec.setgTXN_NAME(txnName);
 						rec.setgROWKEY(s);
 						records.add(rec);
-						System.out.println(s);
+//						System.out.println(s);
         			}
         		}
             }
             
 //			System.out.print("Ready to post records to db");
-			postDBRecords(records);
+			postDBRecords(records, txnName);
 			
 		    } catch (IOException e) {
 		        e.printStackTrace();
@@ -220,13 +220,18 @@ public class SdfModifyChecker{
 	}
 	
 	
-	public static void postDBRecords(List<SdfModRecord> records) throws SQLException {
+	public static void postDBRecords(List<SdfModRecord> records, String txnName) throws SQLException {
+		Connection conn = DBUtil.getConnection();
+		conn.setAutoCommit(false);
+		String delsql = "delete from sdf_mod_list where txn_name = ?";
+		PreparedStatement psdelstmt = conn.prepareStatement(delsql);
+		psdelstmt.setString(1, txnName);
+		psdelstmt.executeUpdate();
+
 		Iterator<SdfModRecord> lIter = records.iterator();
 		JdbcTemplate lJT = new JdbcTemplate(DBUtil.getDataSource());
 		String lSql = "insert into sdf_mod_list(branch, issue_type, filepath, txn_name, rowkey, add_date) "+
 				"values(?,?,?,?,?,now()) on duplicate key update add_date = now()";
-		Connection conn = DBUtil.getConnection();
-		conn.setAutoCommit(false);
 		PreparedStatement pstmt = conn.prepareStatement(lSql);
 
 		try{

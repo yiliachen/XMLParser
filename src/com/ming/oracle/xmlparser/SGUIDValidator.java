@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 public class SGUIDValidator {
 	private String branchName;
+	private String label;
 	private ConcurrentHashMap<String, String> RowkeySguidMap;
 	private ConcurrentHashMap<String, String> SguidInfo;
 	private ConcurrentHashMap<String, String> SguidVOInfo;
@@ -125,7 +126,9 @@ public class SGUIDValidator {
 					//ERROR_SGUIDDIFF|Filepath|srcSGUID|trgSGUID|rowkey|srcBranch|trgBranch
 					System.out.println("ERROR_SGUIDDIFF|"+pArray[0]+"|"+lSrcSguid+"|"+ pArray[4]+ "|"+pArray[2] + "|"+this.getBranchName()+"|"+svd.getBranchName());
 				}else{
-					System.out.println("INFOHasMoreRowkey|"+pArray[0]+"| rowkey " +pArray[2]+" in target branch: "+svd.getBranchName()+" not in source:"+this.getBranchName()  );
+//					System.out.println("INFOHasMoreRowkey|"+pArray[0]+"| rowkey " +pArray[2]+" in target branch: "+svd.getBranchName()+" not in source:"+this.getBranchName()  );
+//					INFOHasMoreRowkey|filepath|voname|rowkey|branch(has rowkey)|branch(not has rowkey)
+					System.out.println("INFOHasMoreRowkey|"+pArray[0]+"|"+pArray[1]+"|" +pArray[2]+"|"+svd.getBranchName()+"_"+svd.getLabel()+"|"+this.getBranchName()+"_"+this.getLabel()  );
 				}
 			}
 		}
@@ -143,5 +146,11 @@ public class SGUIDValidator {
 	}
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

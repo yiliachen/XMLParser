@@ -69,6 +69,8 @@ public class postToApex {
 					}
 					String [] lfields = lLine.split("\\|");
 					SguidIssueRecord lsir = new SguidIssueRecord();
+					lsir.setgSTATUS("NEW");
+					lsir.setgBRANCH(self.getBranchLabel());
 					//System.out.println(lLine);
 					if(lfields[0].equals("NullSGUID")){
 						lsir.setgISSUE_TYPE("NullSGUID");
@@ -85,8 +87,16 @@ public class postToApex {
 						lsir.setgFILEPATH(lfields[2]);
 						lsir.setgCOMMENTS(lfields[3]+"|"+lfields[4]+"|"+lfields[5]);
 					}
-					if(lfields[0].equals("WARNROWMOVE") || lfields[0].equals("INFOHasMoreRowkey")){
+					if(lfields[0].equals("WARNROWMOVE")){
 						continue;
+					}
+					if(lfields[0].equals("INFOHasMoreRowkey")){
+//						INFOHasMoreRowkey|filepath|voname|rowkey|branch(has rowkey)|branch(not has rowkey)
+						lsir.setgISSUE_TYPE("INFOHasMoreRowkey");
+						lsir.setgFILEPATH(lfields[1]);
+						lsir.setgBRANCH(lfields[4]);
+						lsir.setgTAR_BRANCH(self.getBranchLabel());
+						lsir.setgCOMMENTS(lfields[2]+"|"+lfields[3]);
 					}
 					if(lfields[0].equals("ERROR_DUPSGUID") 
 							|| lfields[0].equals("ERROR_SGUIDDIFF")){
@@ -99,8 +109,6 @@ public class postToApex {
 						lsir.setgFILEPATH(lfields[1]);
 						lsir.setgCOMMENTS(lLine);
 					}
-					lsir.setgSTATUS("NEW");
-					lsir.setgBRANCH(self.getBranchLabel());
 					issues.add(lsir);
 					//dopost(issues, args[1]);
 				}
@@ -118,8 +126,8 @@ public class postToApex {
 	public void postDBRecords(List<SguidIssueRecord> pIssues) throws SQLException {
 		Iterator<SguidIssueRecord> lIter = pIssues.iterator();
 		JdbcTemplate lJT = new JdbcTemplate(DBUtil.getDataSource());
-		String lSql = "insert into sguid_issue_list(filepath, issue_type, comments, branch, add_date) "+
-				"values(substring(?,instr(?, 'fusionapps')),?,?,?,now()) on duplicate key update add_date = now()";
+		String lSql = "insert into sguid_issue_list(filepath, issue_type, comments, branch, tar_branch, add_date) "+
+				"values(substring(?,instr(?, 'fusionapps')),?,?,?,?,now()) on duplicate key update add_date = now()";
 		Connection conn = DBUtil.getConnection();
 		conn.setAutoCommit(false);
 		//		String delsql = "delete from sguid_issue_list where branch = ?";
@@ -133,9 +141,9 @@ public class postToApex {
 				if("".equals(lBranchName)){
 					lBranchName = lSir.getgBRANCH();
 				}
-				Object [] args = {lSir.getgFILEPATH(), lSir.getgFILEPATH(), lSir.getgISSUE_TYPE(), lSir.getgCOMMENTS(), lSir.getgBRANCH() };
+				Object [] args = {lSir.getgFILEPATH(), lSir.getgFILEPATH(), lSir.getgISSUE_TYPE(), lSir.getgCOMMENTS(), lSir.getgBRANCH(), lSir.getgTAR_BRANCH() };
 				//System.out.println("executing sql:"+lSql+args);
-				int[] argtypes = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+				int[] argtypes = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 				try {
 					lJT.prepareBatch(pstmt, args, argtypes);
 				} catch (SQLException e) {
