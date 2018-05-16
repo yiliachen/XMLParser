@@ -114,7 +114,7 @@ public class postToApex {
 				}
 				System.out.print("Ready to post records to db");
 				self.splitAndPostDBRecords(issues);
-				self.postmail();
+//				self.postmail();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
