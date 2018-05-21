@@ -44,6 +44,7 @@ public class SGUIDValidator {
 	public SGUIDValidator(String RefFileName){
         BufferedReader refreader = null;
         
+        // filepath|vo|rowkey|N|sguid|am
         File lrefFile = new File(RefFileName);
         ConcurrentHashMap<String, String> gMap = new ConcurrentHashMap<String, String>();
         ConcurrentHashMap<String, String> rowkeyMap = new ConcurrentHashMap<String, String>();
@@ -58,11 +59,14 @@ public class SGUIDValidator {
         	 * SGUID should not be changed between Branches.
         	 */
         	String []lRefArray = lRefLine.split("\\|");
-        	//format of the key voinstancesguid
+        	//format of the key voinstancesguid|
+        	// vo|sguid , line
         	gMap.put(lRefArray[1]+"|"+lRefArray[4], lRefLine);
         	//format rowkey sguid
+        	// rowkey|vo , sguid
         	rowkeyMap.put(lRefArray[2]+"|"+lRefArray[1], lRefArray[4]);
         	//Sguid 
+        	// sguid, line
         	sguidmap.put(lRefArray[4], lRefLine);
         }
         refreader.close();
@@ -112,8 +116,8 @@ public class SGUIDValidator {
 				}
 			}else{
 				//vo sguid can not be found but rowkey exists means it assigned different rowkey
-				if(this.getRowkeySguidMap().containsKey(pArray[2])){
-					String lSrcSguid = this.getRowkeySguidMap().get(pArray[2]);
+				if(this.getRowkeySguidMap().containsKey(pArray[2]+"|"+pArray[1])){
+					String lSrcSguid = this.getRowkeySguidMap().get(pArray[2]+"|"+pArray[1]);
 					//if sguid can be found in target branch and rowkey and filepath are the same it means the VO instance got changed
 					
 					if(this.getSguidVOInfo2().containsKey(lSrcSguid)){
